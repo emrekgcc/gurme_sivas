@@ -1,11 +1,12 @@
 const grid = document.getElementById('restaurant-grid');
 const filterBtns = document.querySelectorAll('.filter-btn');
 
-// Zorunlu yeniden düzenleme engeli: indexOf döngü içinde çağrılırsa her kart için O(n) tarama olur.
-// Başlangıçta bir kez Map oluşturarak O(1)'e indiriyoruz.
+// O(1) index erişimi için Map — döngü içinde indexOf yok
 const restoranIndexMap = new Map(restoranlar.map((r, i) => [r, i]));
 
 function restoranlariGoster(liste) {
+    // Batch DOM Update: tek string, DOM'a tek seferde basılır
+    // innerHTML += YOK, offsetWidth/Height sorgusu YOK
     let htmlContent = "";
 
     const siraliListe = [...liste].sort((a, b) => {
@@ -17,19 +18,19 @@ function restoranlariGoster(liste) {
     siraliListe.forEach((restoran, index) => {
         const orijinalIndex = restoranIndexMap.get(restoran);
         const gorunecekPuan = parseFloat(restoran.puan) ? restoran.puan : "Puan Yok";
-        // İlk 3 kart eager (LCP için görünür alan), geri kalanlar lazy
+        // İlk 3 kart LCP için eager, geri kalanlar lazy (madde 3)
         const loadingAttr = index < 3 ? 'eager' : 'lazy';
 
         htmlContent += `
             <a class="card" href="detay.html?id=${orijinalIndex}" aria-label="${restoran.ad} detaylarını keşfet">
                 <div class="img-container">
-                   <img src="${restoran.resim}"
-                        alt="${restoran.ad}"
-                        class="card-img"
-                        loading="${loadingAttr}"
-                        width="400"
-                        height="230"
-                        decoding="async">
+                    <img src="${restoran.resim}"
+                         alt="${restoran.ad}"
+                         class="card-img"
+                         loading="${loadingAttr}"
+                         decoding="async"
+                         width="400"
+                         height="230">
                 </div>
                 <div class="card-body">
                     <div class="card-info">
@@ -43,6 +44,7 @@ function restoranlariGoster(liste) {
         `;
     });
 
+    // Tek DOM yazımı — reflow tetiklenmiyor
     grid.innerHTML = htmlContent;
 }
 
