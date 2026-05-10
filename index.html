@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sivas'ın en iyi restoranları ve yöresel lezzetleri için kapsamlı rehber. Sivas köftesi, katmer ve madımak aşı nerede yenir? En iyi mekanları keşfedin.">
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
+    <link rel="icon" href="data:,">
+    <title>Gurme Sivas | Sivas'ın En İyi Restoranları ve Yöresel Lezzetleri</title>
+
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+    <!-- LCP: Hero görselleri önceden yükle -->
+    <link rel="preload" as="image" href="assets/images/hero-bg.webp"
+          type="image/webp" media="(min-width: 769px)" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/images/hero-bg-mobile.webp"
+          type="image/webp" media="(max-width: 768px)" fetchpriority="high">
+
+    <!-- Font Awesome woff2 önceden yükle -->
+    <link rel="preload"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2"
+          as="font" type="font/woff2" crossorigin>
+    <link rel="preload"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2"
+          as="font" type="font/woff2" crossorigin>
+
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background-color:#f8f9fa;color:#2c3e50;line-height:1.6;display:flex;flex-direction:column;min-height:100vh}
+        header{background:linear-gradient(135deg,#0d1b2a 0%,#1a2733 60%,#1e2f42 100%);border-bottom:3px solid #cbb279;padding:.6rem 5%;position:sticky;top:0;z-index:1000;box-shadow:0 4px 20px rgba(203,178,121,.15);min-height:106px;display:flex;align-items:center;}
+        nav{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;width:100%}
+        .logo img{height:90px;width:90px;display:block;aspect-ratio:1/1}
+        nav ul{display:flex;list-style:none;gap:2.5rem}
+        nav ul li a{text-decoration:none;color:#cbb279;font-weight:600;font-size:1rem}
+        .skip-link{position:absolute;top:-100px;left:10px;background:#cbb279;color:#fff;padding:10px 15px;z-index:10001;font-weight:700;border-radius:5px;text-decoration:none}
+        .skip-link:focus{top:10px}
+
+        /*
+          CLS 0.599 ÇÖZÜMÜ: hero-overlay'in CLS yapmasının sebebi
+          hero'nun yüksekliği JS/CSS geç yüklenince kayıyor.
+          Hero'yu tamamen inline critical CSS ile tanımlıyoruz,
+          contain:strict ile layout hesabını izole ediyoruz.
+        */
+        .hero{
+            position:relative;
+            width:100%;
+            height:400px;
+            min-height:400px;
+            /* contain: layout kaymasını bu elemana hapseder */
+            contain:layout style;
+            overflow:hidden;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+            margin-bottom:3rem;
+        }
+        @media(max-width:768px){.hero{height:300px;min-height:300px}}
+
+        /*
+          Hero arka planı img etiketi ile veriyoruz (background-image yerine).
+          Böylece preload çalışır, tarayıcı boyutu bilir, CLS olmaz.
+        */
+        .hero-bg-img{
+            position:absolute;
+            top:0;left:0;
+            width:100%;height:100%;
+            object-fit:cover;
+            object-position:center;
+            z-index:0;
+            /* fetchpriority="high" HTML'de verilecek */
+        }
+        .hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(26,39,51,.6);z-index:1}
+        .hero-content{position:relative;z-index:2;color:#fff}
+        .hero-content h1{font-size:3.5rem;font-family:'Times New Roman',Times,serif;letter-spacing:3px;margin-bottom:.5rem}
+        .hero-content p{font-size:1.3rem;color:#e0e0e0}
+        @media(max-width:768px){.hero-content h1{font-size:2.2rem}}
+
+        /* Grid iskelet */
+        #restaurant-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;width:100%;min-height:400px}
+        @media(max-width:1024px){#restaurant-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:768px){#restaurant-grid{grid-template-columns:1fr}}
+
+        /* Kart resim alanı — CLS için alan rezervasyonu */
+        .img-container{width:100%;aspect-ratio:400/230;overflow:hidden;background-color:#e8e8e8;flex-shrink:0;contain:strict}
+        .card-img{width:100%;height:230px;object-fit:cover;display:block}
+    </style>
+
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css"></noscript>
+
+    <link rel="preload"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+</head>
+<body>
+
+    <a href="#main" class="skip-link">Ana İçeriğe Atla</a>
+    <header></header>
+
+    <!--
+      HERO: background-image yerine <img> kullanıyoruz.
+      - preload ile önceden indirilen resim hemen gösterilir
+      - Tarayıcı boyutu bildiği için CLS olmaz
+      - hero-overlay artık boyutu bilen bir parent içinde, kayma yok
+    -->
+    <section class="hero">
+        <img class="hero-bg-img"
+             src="assets/images/hero-bg.webp"
+             alt=""
+             aria-hidden="true"
+             fetchpriority="high"
+             decoding="sync"
+             width="1920"
+             height="400">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>SİVAS LEZZET DURAKLARI</h1>
+            <p>Keşfedin, Tadın, Unutmayın</p>
+        </div>
+    </section>
+
+    <main id="main">
+        <div class="action-bar">
+            <div class="filter-pills" id="filter-container">
+                <button class="filter-btn active" data-filter="all" aria-label="Tüm mekanları göster">
+                    <i class="fa-solid fa-border-all" aria-hidden="true"></i> Tümü
+                </button>
+                <button class="filter-btn" data-filter="Köfte & Kebap" aria-label="Köfte ve kebap mekanlarını filtrele">
+                    <i class="fa-solid fa-burger" aria-hidden="true"></i> Köfte & Kebap
+                </button>
+                <button class="filter-btn" data-filter="Yöresel Yemekler" aria-label="Yöresel yemek mekanlarını filtrele">
+                    <i class="fa-solid fa-bowl-food" aria-hidden="true"></i> Yöresel
+                </button>
+                <button class="filter-btn" data-filter="Pide & Hamur İşi" aria-label="Pide ve hamur işi mekanlarını filtrele">
+                    <i class="fa-solid fa-pizza-slice" aria-hidden="true"></i> Hamur İşi
+                </button>
+                <button class="filter-btn" data-filter="Kahvaltı & Çorba" aria-label="Kahvaltı ve çorba mekanlarını filtrele">
+                    <i class="fa-solid fa-mug-hot" aria-hidden="true"></i> Kahvaltı
+                </button>
+                <button class="filter-btn" data-filter="Şarküteri / Diğer" aria-label="Şarküteri ve diğer mekanları filtrele">
+                    <i class="fa-solid fa-shop" aria-hidden="true"></i> Diğer
+                </button>
+            </div>
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <input type="text" id="searchInput"
+                       placeholder="Mekan veya yemek ara..."
+                       aria-label="Mekan veya yemek adına göre ara">
+            </div>
+        </div>
+        <div id="restaurant-grid"></div>
+    </main>
+
+    <footer></footer>
+
+    <script src="header.js" defer></script>
+    <script src="footer.js" defer></script>
+    <script src="data.js" defer></script>
+    <script src="main.js" defer></script>
+</body>
+</html>
