@@ -3,63 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sivas yöresel lezzetleri ve en iyi restoran rehberi. Sivas köftesi, katmer ve madımak aşı nerede yenir keşfedin.">
+    <meta name="description" content="Gurme Sivas ile iletişime geçin. Öneri, şikayet ve işbirliği için bize ulaşın.">
     <link rel="icon" href="data:,">
-    <title>Gurme Sivas | Ana Sayfa</title>
+    <!-- Önceki sürümde başlık yanlışlıkla "Ana Sayfa" yazıyordu, düzeltildi -->
+    <title>İletişim | Gurme Sivas</title>
+
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Font Awesome async - render-blocking engellendi -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preload"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
 </head>
 <body>
 
     <a href="#main" class="skip-link">Ana İçeriğe Atla</a>
-
     <header></header>
 
-    <section class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>SİVAS LEZZET DURAKLARI</h1>
-            <p>Keşfedin, Tadın, Unutmayın</p>
-        </div>
-    </section>
-
     <main id="main">
-        <div class="action-bar">
-            <div class="filter-pills" id="filter-container">
-                <button class="filter-btn active" data-filter="all">
-                    <i class="fa-solid fa-border-all" aria-hidden="true"></i> Tümü
-                </button>
-                <button class="filter-btn" data-filter="Köfte & Kebap">
-                    <i class="fa-solid fa-burger" aria-hidden="true"></i> Köfte & Kebap
-                </button>
-                <button class="filter-btn" data-filter="Yöresel Yemekler">
-                    <i class="fa-solid fa-bowl-food" aria-hidden="true"></i> Yöresel
-                </button>
-                <button class="filter-btn" data-filter="Pide & Hamur İşi">
-                    <i class="fa-solid fa-pizza-slice" aria-hidden="true"></i> Hamur İşi
-                </button>
-                <button class="filter-btn" data-filter="Kahvaltı & Çorba">
-                    <i class="fa-solid fa-mug-hot" aria-hidden="true"></i> Kahvaltı
-                </button>
-                <button class="filter-btn" data-filter="Şarküteri / Diğer">
-                    <i class="fa-solid fa-shop" aria-hidden="true"></i> Diğer
-                </button>
+        <div class="contact-container">
+            <div class="contact-header">
+                <h1>İletişim</h1>
+                <p>Görüş ve önerileriniz için bize ulaşın</p>
             </div>
-
-            <div class="search-container">
-                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-                <input type="text" id="searchInput" placeholder="Mekan veya yemek ara...">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                        <div>
+                            <strong>Adres</strong>
+                            <p>Sivas, Türkiye</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                        <div>
+                            <strong>E-posta</strong>
+                            <p>info@gurmesivas.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                        <div>
+                            <strong>Instagram</strong>
+                            <p>@gurmesivas1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-map">
+                    <!-- loading="lazy" ile iframe başlangıçta yüklenmez, CLS ve LCP iyileşir -->
+                    <iframe src="https://maps.google.com/maps?q=Sivas+Merkez&output=embed"
+                            title="Sivas Haritası"
+                            width="100%"
+                            height="450"
+                            loading="lazy"
+                            allowfullscreen
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
             </div>
         </div>
-
-        <div id="restaurant-grid"></div>
     </main>
 
     <footer></footer>
 
-    <script src="data.js"></script>
-    <script src="header.js"></script>
-    <script src="footer.js"></script>
-    <script src="main.js"></script>
+    <script src="header.js" defer></script>
+    <script src="footer.js" defer></script>
 </body>
 </html>
