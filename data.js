@@ -1,0 +1,236 @@
+// Projenin veri yapısını modüler tutmak için tüm restoran bilgilerini tek bir JSON formatlı dizide topladık. 
+// Bu sayede ileride bir veritabanı entegrasyonu (örneğin Firebase) yaparsak frontend kodlarına hiç dokunmadan sadece bu veri kaynağını değiştirmemiz yeterli olacak.
+
+const restoranlar = [
+    {
+        ad: "Lezzetçi Sivas Mutfağı",
+        kategori: "Yöresel Yemekler",
+        puan: "4.3",
+        resim: "assets/images/lezzetci-sivas.webp",
+        aciklama: "Meşhur çılbır, madımak aşı ve salatalık dolmasının bir numaralı adresi.",
+        detayliYazi: "Şehrin gözde yöresel mutfaklarından biridir. Özellikle yoğurt ve baharatla lezzetlenen çılbır, Sivas'ın meşhur otuyla yapılan madımak aşı ve enfes salatalık dolması ile öne çıkıyor.",
+        adres: "Sularbaşı Mah. Ali Ağa Cami Sok. No:12, Merkez/Sivas",
+        telefon: "0346 224 27 47",
+        konum: "https://maps.google.com/maps?q=Lezzetçi Sivas Mutfağı&output=embed"
+    },
+    {
+        ad: "Yeşil Konak Restoran: Üç Kuşak Yöresel",
+        kategori: "Yöresel Yemekler",
+        puan: "4.0",
+        resim: "assets/images/yesil-konak.webp",
+        aciklama: "Kuşaktan kuşağa aktarılan asırlık Divriği pilavı ve Kesme Aşı durağı.",
+        detayliYazi: "Sivas mutfağının kalesi konumunda. Kuzu eti, nohut ve bademle zenginleştirilmiş meşhur Divriği pilavını, yeşil mercimek ve erişte ile yapılan doyurucu kesme aşını ve şifa deposu madımak aşını burada mutlaka denemelisiniz.",
+        adres: "Sivas Merkez",
+        telefon: "0346 XXX XX XX",
+        konum: "https://maps.google.com/maps?q=Sivas Yeşil Konak Restoran&output=embed"
+    },
+    {
+        ad: "Konak Restoran",
+        kategori: "Yöresel Yemekler",
+        puan: "4.0",
+        resim: "assets/images/konak-restoran.webp",
+        aciklama: "Tarihi bir atmosferde Sivas çılbırı ve geleneksel ev yemekleri.",
+        detayliYazi: "Tarihi ve otantik havasıyla dikkat çeken mekanda, Sivas'ın besleyici çorbası kesme aşı, madımak ve yöresel çılbır gibi asırlık lezzetleri en taze haliyle tadabilirsiniz.",
+        adres: "Sivas Merkez",
+        telefon: "0346 YYY YY YY",
+        konum: "https://maps.google.com/maps?q=Sivas Konak Restoran&output=embed"
+    },
+    {
+        ad: "Sivas Sofrası Yöresel Ev Yemekleri",
+        kategori: "Yöresel Yemekler",
+        puan: "4.3",
+        resim: "assets/images/sivas-sofrasi.webp",
+        aciklama: "Mercimek badısı, yumurtalı sübüra ve ev yemeği sıcaklığı.",
+        detayliYazi: "Ev yemeği sıcaklığını arayanlar için ideal. Sivas'ın asırlık lezzetlerinden ince bulgur ve mercimekle hazırlanan mercimek badısı, nefis salatalık dolması ve yoğurtlu hamur işi yumurtalı sübüra mekanın spesiyallerindendir.",
+        adres: "Sivas Merkez",
+        telefon: "0346 ZZZ ZZ ZZ",
+        konum: "https://maps.google.com/maps?q=Sivas Sofrası Yöresel Ev Yemekleri&output=embed"
+    },
+    {
+        ad: "Aşçıbaşı Restoran",
+        kategori: "Yöresel Yemekler",
+        puan: "4.2",
+        resim: "assets/images/ascibasi.webp",
+        aciklama: "Kıymalı iç harcıyla meşhur yöresel salatalık dolması ustası.",
+        detayliYazi: "Sivas mutfağının özel yemeklerini sunan Aşçıbaşı, özellikle kıymalı ve baharatlı iç harcıyla özenle hazırlanan nefis salatalık dolması ile meşhurdur. Geleneksel tatlar için birebir.",
+        adres: "Sivas Merkez",
+        telefon: "0346 XXX XX XX",
+        konum: "https://maps.google.com/maps?q=Sivas Aşçıbaşı Restoran&output=embed"
+    },
+    {
+        ad: "Başaran Köftecisi İzzet Usta",
+        kategori: "Köfte & Kebap",
+        puan: "4.6",
+        resim: "assets/images/basaran-kofte.webp",
+        aciklama: "Sadece et ve tuzla yoğrulan meşhur Sivas köftesinin efsane ismi.",
+        detayliYazi: "Sivas'ın efsanevi köfte ustalarından biri. Günlük taze kıymadan yoğrulan, içerisinde baharat bulunmayan saf et lezzetini sunan meşhur Sivas köftesinin tadına doyamayacaksınız.",
+        adres: "Demircilerardı, 27-29. Sk., Merkez/Sivas",
+        telefon: "0544 600 18 52",
+        konum: "https://maps.google.com/maps?q=Başaran Köftecisi İzzet Usta Sivas&output=embed"
+    },
+    {
+        ad: "Köfteci Kirli Ahmet Usta",
+        kategori: "Köfte & Kebap",
+        puan: "4.0",
+        resim: "assets/images/kirli-ahmet.webp",
+        aciklama: "Sivas'ın en meşhur salaş köftecisi, gerçek et lezzeti ve bol ikram.",
+        detayliYazi: "Toptancılar sitesinde devasa bir salonda hizmet veren, şehrin en nam salmış köftecisidir. Köftenin yanında kemik suyuyla yapılmış mercimek çorbası ve tırnak pide ikram edilir.",
+        adres: "15. Blok, Toptancılar Sitesi No:50, Merkez/Sivas",
+        telefon: "0346 226 28 27",
+        konum: "https://maps.google.com/maps?q=Köfteci Kirli Ahmet Usta Sivas&output=embed"
+    },
+    {
+        ad: "Özen Kebap",
+        kategori: "Köfte & Kebap",
+        puan: "4.5",
+        resim: "assets/images/ozen-kebap.webp",
+        aciklama: "Köklü esnaf lokantası; meşhur kebap ve Divriği pilavı durağı.",
+        detayliYazi: "Şehrin en iyi ve köklü duraklarından biri olup esnaf lokantası samimiyetine sahiptir. Nefis köfte ve kebapların yanı sıra, Sivas'ın baştacı olan etli, nohutlu Divriği pilavını da en iyi yapan yerlerdendir.",
+        adres: "Rahmi Günay Cad., 6A, Merkez/Sivas",
+        telefon: "0346 225 38 72",
+        konum: "https://maps.google.com/maps?q=Özen Kebap Sivas&output=embed"
+    },
+    {
+        ad: "Mis Kebap",
+        kategori: "Köfte & Kebap",
+        puan: "4.1",
+        resim: "assets/images/mis-kebap.webp",
+        aciklama: "Sivas meydanında odun ateşinde yaprak döner ve Sivas kebabı.",
+        detayliYazi: "Mis Kebap, Sivas meydanında yıllardır değişmeyen lezzetiyle hizmet vermektedir. Özellikle odun ateşinde pişen yaprak döneri ve sebzeli Sivas kebabı ile misafirlerini ağırlar.",
+        adres: "Paşabey Mah. Atatürk Cad. Sivas",
+        telefon: "0346 223 52 44",
+        konum: "https://maps.google.com/maps?q=Mis Kebap Sivas&output=embed"
+    },
+    {
+        ad: "Has Döner",
+        kategori: "Köfte & Kebap",
+        puan: "4.4",
+        resim: "assets/images/has-doner.webp",
+        aciklama: "Sivas'ta döner denilince akla ilk gelen kaliteli lezzet duraklarından.",
+        detayliYazi: "Özellikle yaprak dönerinin eşsiz lezzeti ve kalitesiyle müdavimi çok olan, şehrin en sevilen dönercilerinden birisidir.",
+        adres: "Sivas Merkez",
+        telefon: "0346 225 65 65",
+        konum: "https://maps.google.com/maps?q=Has Döner Sivas&output=embed"
+    },
+    {
+        ad: "Sivas Sac Katmeri (Enes Gözleme)",
+        kategori: "Pide & Hamur İşi",
+        puan: "4.5",
+        resim: "assets/images/enes-gozleme.webp",
+        aciklama: "Odun ateşinde taş fırından çıkan çıtır Sivas katmeri ve kete.",
+        detayliYazi: "Kahvaltıların yıldızı! Geleneksel yöntemlerle, odun ateşinde pişen meşhur Sivas katmerini ve içli Sivas ketesini en iyi bulabileceğiniz sıcak bir duraktır.",
+        adres: "Sivas Merkez",
+        telefon: "0546 510 56 10",
+        konum: "https://maps.google.com/maps?q=Enes Gözleme Sivas&output=embed"
+    },
+    {
+        ad: "Erer Taşfırın",
+        kategori: "Pide & Hamur İşi",
+        puan: "4.4",
+        resim: "assets/images/erer-tasfirin.webp",
+        aciklama: "Asırlık fırın geleneğiyle hazırlanan içi dolu Sivas ketesi.",
+        detayliYazi: "Sivas'ın meşhur hamur işi Sivas ketesini odun ateşinin o nefis kokusuyla birlikte sunan, şehrin en sevilen taş fırınlarından biridir.",
+        adres: "Sivas Merkez",
+        telefon: "0346 224 10 40",
+        konum: "https://maps.google.com/maps?q=Erer Taşfırın Sivas&output=embed"
+    },
+    {
+        ad: "Sultana Künefe Katmer",
+        kategori: "Pide & Hamur İşi",
+        puan: "4.0",
+        resim: "assets/images/sultana-katmer.webp",
+        aciklama: "Çıtır çıtır taze Sivas katmeri ve eşsiz tatlı keyfi.",
+        detayliYazi: "Sivas katmeri ve tatlı krizleri için harika bir adres. Geleneksel yöntemlerle açılıp pişirilen çıtır çıtır taze katmerin tadı damağınızda kalacak.",
+        adres: "Sivas Merkez",
+        telefon: "0542 346 58 27",
+        konum: "https://maps.google.com/maps?q=Sultana Künefe Sivas&output=embed"
+    },
+    {
+        ad: "Mücahit Etli Pide",
+        kategori: "Pide & Hamur İşi",
+        puan: "4.5",
+        resim: "assets/images/mucahit-pide.webp",
+        aciklama: "İncecik hamuru ve bol malzemesiyle Sivas usulü etli pide.",
+        detayliYazi: "Sivas usulü etli pidenin en sevilen adreslerinden. İncecik hamuru ve özenle hazırlanan harcıyla fırından dumanı tüterek masanıza gelir.",
+        adres: "Sivas Merkez",
+        telefon: "0346 221 10 70",
+        konum: "https://maps.google.com/maps?q=Mücahit Etli Pide Sivas&output=embed"
+    },
+    {
+        ad: "Gülen Etli Pide",
+        kategori: "Pide & Hamur İşi",
+        puan: "4.7",
+        resim: "assets/images/gulen-pide.webp",
+        aciklama: "Kenarları çıtır, ortası sulu nefis Sivas etli pide ve meşhur sivas köftesi salonu.",
+        detayliYazi: "Yılların tecrübesiyle hazırlanan, kenarları çıtır, ortası sulu nefis Sivas etli pidesinin değişmez ve samimi adreslerindendir.(adminin favori mekanı)",
+        adres: "Sivas Merkez",
+        telefon: "0346 222 17 24",
+        konum: "https://maps.google.com/maps?q=Gülen Etli Pide Sivas&output=embed"
+    },
+    {
+        ad: "Tarihi Behrampaşa Hanı",
+        kategori: "Kahvaltı & Çorba",
+        puan: "4.4",
+        resim: "assets/images/behrampasa.webp",
+        aciklama: "Asırlık tarihi hanın avlusunda kahve ve serpme kahvaltı keyfi.",
+        detayliYazi: "Sivas'ın muhteşem tarihi atmosferini yansıtan asırlık bir handır. Otantik avlusunda sabahları yöresel serpme kahvaltı yapmak veya yorgunluk kahvesi içmek için eşsiz bir ortam sunar.",
+        adres: "Paşabey Mah, Arap Şeyh Cd. no:29/1, Merkez/Sivas",
+        telefon: "0346 224 58 28",
+        konum: "https://maps.google.com/maps?q=Tarihi Behrampaşa Hanı Sivas&output=embed"
+    },
+    {
+        ad: "Lezzetçi Çorbacım",
+        kategori: "Kahvaltı & Çorba",
+        puan: "4.2",
+        resim: "assets/images/lezzetci-corbacim.webp",
+        aciklama: "Şifa deposu Peskütan yoğurdu ile hazırlanan nefis Peskütan çorbası.",
+        detayliYazi: "Özellikle kış aylarında şifa niyetine içilen, taze sütten yapılıp kış için saklanan peskütan yoğurdu ile hazırlanan eşsiz Sivas peskütan çorbasını denemek için en doğru adrestir.",
+        adres: "Şemsi Sivasi Cad., No:3 Merkez/Sivas",
+        telefon: "0346 222 20 25",
+        konum: "https://maps.google.com/maps?q=Lezzetçi Çorbacım Sivas&output=embed"
+    },
+    {
+        ad: "Sivas Belediyesi Sosyal Tesisler",
+        kategori: "Kahvaltı & Çorba",
+        puan: "4.2",
+        resim: "assets/images/sosyal-tesisler.webp",
+        aciklama: "Uygun fiyatlı ve hijyenik ortamda meşhur Peskütan çorbası.",
+        detayliYazi: "Uygun fiyatlı, geniş ve hijyenik ortamında; şehre özgü besleyici peskütan çorbası başta olmak üzere çeşitli Sivas yöresel lezzetlerini tadabileceğiniz harika bir aile mekanıdır.",
+        adres: "Sivas Merkez",
+        telefon: "0552 764 24 60",
+        konum: "https://maps.google.com/maps?q=Sivas Belediyesi Sosyal Tesisler&output=embed"
+    },
+    {
+        ad: "Osman Ağa Konağı",
+        kategori: "Kahvaltı & Çorba",
+        puan: "4.5",
+        resim: "assets/images/osman-aga.webp",
+        aciklama: "Tarihi Sivas konağında asırlık kültürle harmanlanmış kahvaltı.",
+        detayliYazi: "Tarihi bir Sivas konağının mistik dokusu içinde, yörenin asırlık kültürüyle harmanlanmış zengin bir kahvaltı ve ev yemeği deneyimi sunar.",
+        adres: "Sivas Merkez",
+        telefon: "0532 410 23 07",
+        konum: "https://maps.google.com/maps?q=Osman Ağa Konağı Sivas&output=embed"
+    },
+    {
+        ad: "Pişi Kahvaltı Kafe",
+        kategori: "Kahvaltı & Çorba",
+        puan: "4.3",
+        resim: "assets/images/pisi-kafe.webp",
+        aciklama: "Güne sıcacık ve taptaze pişilerle samimi bir başlangıç yapın.",
+        detayliYazi: "Güne taptaze, sıcacık pişilerle harika bir başlangıç yapmak isteyenler için özel olarak konseptleştirilmiş oldukça samimi ve lezzetli bir kahvaltı mekanıdır.",
+        adres: "Sivas Merkez",
+        telefon: "0540 271 40 40",
+        konum: "https://maps.google.com/maps?q=Pişi Kahvaltı Kafe Sivas&output=embed"
+    },
+    {
+        ad: "Sivas Pezik Turşusu (Sivas Yörem)",
+        kategori: "Şarküteri / Diğer",
+        puan: " ",
+        resim: "assets/images/pezik.webp",
+        aciklama: "Sivas sofralarının vazgeçilmezi pancar sapından Pezik (Dal) Turşusu.",
+        detayliYazi: "Sivas sofralarının vazgeçilmezi olan, özel olarak pancar saplarından yapılan meşhur pezik (dal) turşusunu en çıtır ve doğal haliyle bulabileceğiniz asırlık lezzet durağıdır.",
+        adres: "Sivas Merkez",
+        telefon: "0534 370 53 86",
+        konum: "https://maps.google.com/maps?q=Sivas Pezik Turşusu&output=embed"
+    }
+];
